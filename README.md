@@ -16,19 +16,19 @@ pip3 install openpyxl
 ## Usage
 
 Run these nmap commands:
-###Masscan
-sudo masscan -iL INPUT_FILE.txt -p 0-65535 -oG MASSCAN_OUTPUT --max-rate=4000    
+### Masscan
+```sudo masscan -iL INPUT_FILE.txt -p 0-65535 -oG MASSCAN_OUTPUT --max-rate=4000    ```
 (Note, 4000 = ~4 MB/sec.  This number can be scaled up or down based on size of network and performance, however, do not exceede 8000.  Generally it's best to start with 1000 or 2000, look at the estiamted duration, then scale up if necessary.
-Ports: cat MASSCAN_OUTPUT.gnmap |grep Host |cut -d '/' -f 1 | cut -d ' ' -f 5 | sort -u  | tr '\n' ','
-Hosts: cat MASSCAN_OUTPUT.gnmap |grep Host |cut -d ' ' -f 3 | sort -u
+Ports: ```cat MASSCAN_OUTPUT.gnmap |grep Host |cut -d '/' -f 1 | cut -d ' ' -f 5 | sort -u  | tr '\n' ','```
+Hosts: ```cat MASSCAN_OUTPUT.gnmap |grep Host |cut -d ' ' -f 3 | sort -u```
 
-###Nmap
+### Nmap
 ~~TCP ONLY~~
-sudo nmap -v -sS -sV -sC -T4 -Pn -R -O --version-all --reason --script default,http-enum,http-default-accounts,http-config-backup,http-auth-finder,http-method-tamper,http-vuln-cve2010-0738,http-vuln-cve2010-2861,http-vuln-cve2012-1823,smb-enum-users,smb-enum-shares,nfs-showmount,nfs-statfs,dns-zone-transfer,dns-update,sip-enum-users,afp-ls,ntp-monlist,http-vmware-path-vuln,http-vuln-cve2013-0156,http-coldfusion-subzero,http-adobe-coldfusion-apsa1301,ssl-heartbleed -iL INPUT_FILE.txt -oA OUTPUT_FILE_OUT -p REFERENCE_MASSCAN_PORTS
+```sudo nmap -v -sS -sV -sC -T4 -Pn -R -O --version-all --reason --script default,http-enum,http-default-accounts,http-config-backup,http-auth-finder,http-method-tamper,http-vuln-cve2010-0738,http-vuln-cve2010-2861,http-vuln-cve2012-1823,smb-enum-users,smb-enum-shares,nfs-showmount,nfs-statfs,dns-zone-transfer,dns-update,sip-enum-users,afp-ls,ntp-monlist,http-vmware-path-vuln,http-vuln-cve2013-0156,http-coldfusion-subzero,http-adobe-coldfusion-apsa1301,ssl-heartbleed -iL INPUT_FILE.txt -oA OUTPUT_FILE_OUT -p REFERENCE_MASSCAN_PORTS```
 ~~UDP ONLY~~
-sudo nmap -v -sU -sV -sC -T4 -Pn -R --reason --script default,smb-enum-users,smb-enum-shares,nfs-showmount,nfs-statfs,dns-zone-transfer,dns-update,sip-enum-users,ntp-monlist,tftp-enum -iL INPUT_FILE.txt -oA OUTPUT_FILE_OUT -p 53,67-69,123,135,137-139,161,445,500,520,623,631,1434,1900,5060-5061,11211
+```sudo nmap -v -sU -sV -sC -T4 -Pn -R --reason --script default,smb-enum-users,smb-enum-shares,nfs-showmount,nfs-statfs,dns-zone-transfer,dns-update,sip-enum-users,ntp-monlist,tftp-enum -iL INPUT_FILE.txt -oA OUTPUT_FILE_OUT -p 53,67-69,123,135,137-139,161,445,500,520,623,631,1434,1900,5060-5061,11211```
 ~~ALL~~
-sudo nmap -v -sS -sU -sV -sC -T4 -Pn -R -O --version-all --reason --script default,http-enum,http-default-accounts,http-config-backup,http-auth-finder,http-method-tamper,http-vuln-cve2010-0738,http-vuln-cve2010-2861,http-vuln-cve2012-1823,smb-enum-users,smb-enum-shares,nfs-showmount,nfs-statfs,dns-zone-transfer,dns-update,sip-enum-users,afp-ls,ntp-monlist,http-vmware-path-vuln,http-vuln-cve2013-0156,http-coldfusion-subzero,http-adobe-coldfusion-apsa1301,ssl-heartbleed,nfs-showmount,nfs-statfs,dns-zone-transfer,dns-update,sip-enum-users,ntp-monlist,tftp-enum -p T:1-65535,U:53,67-69,123,135,137-139,161,445,500,520,623,631,1434,1900,5060-5061 -iL INPUT_FILE -oA OUTPUT_FILE
+```sudo nmap -v -sS -sU -sV -sC -T4 -Pn -R -O --version-all --reason --script default,http-enum,http-default-accounts,http-config-backup,http-auth-finder,http-method-tamper,http-vuln-cve2010-0738,http-vuln-cve2010-2861,http-vuln-cve2012-1823,smb-enum-users,smb-enum-shares,nfs-showmount,nfs-statfs,dns-zone-transfer,dns-update,sip-enum-users,afp-ls,ntp-monlist,http-vmware-path-vuln,http-vuln-cve2013-0156,http-coldfusion-subzero,http-adobe-coldfusion-apsa1301,ssl-heartbleed,nfs-showmount,nfs-statfs,dns-zone-transfer,dns-update,sip-enum-users,ntp-monlist,tftp-enum -p T:1-65535,U:53,67-69,123,135,137-139,161,445,500,520,623,631,1434,1900,5060-5061 -iL INPUT_FILE -oA OUTPUT_FILE```
 
 ```bash
 python3 nmap_to_excel.py [INPUT.xml] [OUTPUT.xlsx]
